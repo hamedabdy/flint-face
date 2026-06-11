@@ -13,7 +13,6 @@ import QueryFilter from "./QueryFilter";
 import EnhancedTableHead from "./EnhancedTableHead";
 import EnhancedTableBody from "./EnhancedTableBody";
 import TablePaginationActions from "./EnhancedTablePagination";
-import Utils from "./Utils";
 import { useDynamicListState } from "./useDynamicListState";
 
 const DynamicList = () => {
@@ -29,15 +28,11 @@ const DynamicList = () => {
     order: "desc",
     orderBy: "sys_updated_on",
   });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
 
   // Fetches only the row data — called when fields/query change
 const fetchData = async () => {
   try {
-    setLoading(true);
-    setError(null);
     const resp = await ApiService.getData({
       table_name:     tableName,
       sysparm_query:  sysparmQuery,
@@ -45,18 +40,13 @@ const fetchData = async () => {
     });
     setData(resp.data);
   } catch (error) {
-    setError(`Error loading data: ${error.message}`);
-  } finally {
-    setLoading(false);
+    console.error(`Error loading data: ${error.message}`);
   }
 };
 
 // Loads columns + preference — called only on first load / table change
   const initColumns = async () => {
     try {
-      setLoading(true);
-      setError(null);
-
       const [colsResp, tableInfo, pref] = await Promise.all([
         ApiService.getColumns(tableName),
         ApiService.getTable(tableName),
@@ -82,9 +72,7 @@ const fetchData = async () => {
       setSysparmFields(allElements.join(","));
 
     } catch (error) {
-      setError(`Error loading columns: ${error.message}`);
-    } finally {
-      setLoading(false);
+      console.error(`Error loading columns: ${error.message}`);
     }
   };
 
@@ -103,7 +91,7 @@ const fetchData = async () => {
 
   const handleFilterChange = (query) => {
     setSysparmQuery(query);
-    getData();
+    fetchData();
   };
 
   // Handler for column selection from EnhancedToolbar
@@ -122,7 +110,7 @@ const fetchData = async () => {
     try {
       await saveListColumnPref(tableName, selectedElements);
     } catch (err) {
-      setError(`Failed to save column preference: ${err.message}`);
+      console.error(`Failed to save column preference: ${err.message}`);
     }
   };
 
