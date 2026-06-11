@@ -14,6 +14,7 @@ import EnhancedTableHead from "./EnhancedTableHead";
 import EnhancedTableBody from "./EnhancedTableBody";
 import TablePaginationActions from "./EnhancedTablePagination";
 import Utils from "./Utils";
+import { useDynamicListState } from "./useDynamicListState";
 
 const DynamicList = () => {
   const { tableName } = useParams();
@@ -24,15 +25,13 @@ const DynamicList = () => {
   const [columns, setColumns] = useState([]);
   const [data, setData] = useState([]);
   const [table, setTable] = useState({}); // table metadata
-  const [order, setOrder] = useState("desc");
-  const [orderBy, setOrderBy] = useState("sys_updated_on");
-  const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(100);
+  const listState = useDynamicListState(data, columns, {
+    order: "desc",
+    orderBy: "sys_updated_on",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Add state for visible columns (elements)
-  const [visibleColumnElements, setVisibleColumnElements] = useState([]);
+
 
   // Fetches only the row data — called when fields/query change
 const fetchData = async () => {
@@ -47,7 +46,6 @@ const fetchData = async () => {
     setData(resp.data);
   } catch (error) {
     setError(`Error loading data: ${error.message}`);
-    console.error("Error fetching data:", error);
   } finally {
     setLoading(false);
   }
@@ -73,19 +71,18 @@ const fetchData = async () => {
       if (pref?.columns?.length) {
         const valid = pref.columns.filter(el => allColumns.some(c => c.element === el));
         if (valid.length) {
-          setVisibleColumnElements(valid);
+          listState.setVisibleColumnElements(valid);
           setSysparmFields(valid.join(","));
           return;
         }
       }
       // No preference — show all columns
       const allElements = allColumns.map(col => col.element);
-      setVisibleColumnElements(allElements);
+      listState.setVisibleColumnElements(allElements);
       setSysparmFields(allElements.join(","));
 
     } catch (error) {
       setError(`Error loading columns: ${error.message}`);
-      console.error("Error in initColumns:", error);
     } finally {
       setLoading(false);
     }
@@ -109,55 +106,10 @@ const fetchData = async () => {
     getData();
   };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = columns.map((n) => n.sys_id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const isSelected = (id) => selected.indexOf(id) !== -1;
-
   // Handler for column selection from EnhancedToolbar
   const handleColumnsChange = async (selectedElements) => {
     // Update UI state
-    setVisibleColumnElements(selectedElements);
+    listState.setVisibleColumnElements(selectedElements);
     const newSysparmFields = selectedElements.join(",");
     setSysparmFields(newSysparmFields);
 
@@ -170,48 +122,21 @@ const fetchData = async () => {
     try {
       await saveListColumnPref(tableName, selectedElements);
     } catch (err) {
-      console.error("[DynamicList] Failed to save column preference:", err);
+      setError(`Failed to save column preference: ${err.message}`);
     }
   };
-
-  // Only show columns and data for selected columns, preserving order from visibleColumnElements
-  const filteredColumns = visibleColumnElements
-    .map(element => columns.find(col => col.element === element))
-    .filter(Boolean);
-  const filteredData = data.map(row => {
-    const filteredRow = {};
-    visibleColumnElements.forEach(el => {
-      filteredRow[el] = row[el];
-    });
-    // Always include sys_id for row keys/links
-    if (row.sys_id) filteredRow.sys_id = row.sys_id;
-    return filteredRow;
-  });
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
-
-  const visibleRows = React.useMemo(
-    () =>
-      Utils.stableSort(filteredData, Utils.getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage, filteredData]
-  );
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2, overflow: "hidden" }}>
         <EnhancedToolbar
           columns={columns}
-          numSelected={selected.length}
+          numSelected={listState.selected.length}
           tableName={tableName}
           table={table}
           onColumnsChange={handleColumnsChange}
           onFilterChange={handleFilterChange}
-          visibleColumnElements={visibleColumnElements}
+          visibleColumnElements={listState.visibleColumnElements}
         />
         <QueryFilter tableName={tableName} setData={setData} />
         <TableContainer
@@ -231,24 +156,24 @@ const fetchData = async () => {
             }}
           >
             <EnhancedTableHead
-              columns={filteredColumns}
-              visibleRows={visibleRows}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={filteredColumns.length}
+              columns={listState.filteredColumns}
+              visibleRows={listState.visibleRows}
+              numSelected={listState.selected.length}
+              order={listState.order}
+              orderBy={listState.orderBy}
+              onSelectAllClick={listState.handleSelectAllClick}
+              onRequestSort={listState.handleRequestSort}
+              rowCount={listState.filteredColumns.length}
               onFilterChange={handleFilterChange}
             />
             <EnhancedTableBody
-              columns={filteredColumns}
-              visibleRows={visibleRows}
-              isSelected={isSelected}
+              columns={listState.filteredColumns}
+              visibleRows={listState.visibleRows}
+              isSelected={listState.isSelected}
               handleClick={(event, id) => {
-                handleClick(event, id);
+                listState.handleClick(event, id);
               }}
-              emptyRows={emptyRows}
+              emptyRows={listState.emptyRows}
               tableName={tableName}
             />
           </Table>
@@ -257,10 +182,10 @@ const fetchData = async () => {
           rowsPerPageOptions={[10, 25, 50, 100]}
           component="div"
           count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPage={listState.rowsPerPage}
+          page={listState.page}
+          onPageChange={listState.handleChangePage}
+          onRowsPerPageChange={listState.handleChangeRowsPerPage}
           ActionsComponent={TablePaginationActions}
         />
       </Paper>
