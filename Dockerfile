@@ -38,4 +38,4 @@ FROM base AS development
 CMD ["npm", "start"]
 
 FROM base AS production
-CMD ["sh", "-c", "start:prod"]
+CMD ["sh", "-c", "npm run start:prod"]
