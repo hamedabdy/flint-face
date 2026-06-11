@@ -151,7 +151,6 @@ const EnhancedTableBody = (props) => {
             hover
             aria-checked={isItemSelected}
             tabIndex={-1}
-            // selected={isItemSelected}
             key={row.sys_id}
           >
             <TableCell padding="checkbox">
