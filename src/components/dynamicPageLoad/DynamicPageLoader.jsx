@@ -74,7 +74,7 @@ export default function DynamicPageLoader({ pageName }) {
         const result = await ApiService.getData({
           table_name:      'sys_ui_page',
           sysparm_query:   `name=${pageName}`,
-          sysparm_fields:  'name,jsx_compiled', // Only fetch what we need
+          sysparm_fields:  'name,script_compiled', // Only fetch what we need
         });
         
         const rows = result.data;
@@ -86,7 +86,7 @@ export default function DynamicPageLoader({ pageName }) {
 
         const record = rows.pop(); // Get the first (and should be only) record
 
-        if (!record.jsx_compiled) {
+        if (!record.script_compiled) {
           throw new Error(
             `Page "${pageName}" exists but has no compiled script. ` +
             `Re-save the record to trigger compilation.`
@@ -94,7 +94,7 @@ export default function DynamicPageLoader({ pageName }) {
         }
 
         // Execute the compiled module and extract the React component
-        const DynamicComponent = executeCompiledModule(record.jsx_compiled, pageName);
+        const DynamicComponent = executeCompiledModule(record.script_compiled, pageName);
 
         if (!cancelled) setComponent(() => DynamicComponent);
 
