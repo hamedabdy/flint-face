@@ -12,9 +12,9 @@ import TablePagination from '@mui/material/TablePagination';
 // import Switch from '@mui/material/Switch';
 
 // Local components
-import SimpleListHead from '../simpleList/SimpleListHead';
-import SimpleTableBody from '../simpleList/SimpleTableBody';
-import SimpleListToolbar from '../simpleList/SimpleListToolbar';
+import SimpleListHead from './SimpleListHead';
+import SimpleTableBody from './SimpleTableBody';
+import SimpleListToolbar from './SimpleListToolbar';
 import TablePaginationActions from '../dynamicList/EnhancedTablePagination';
 import QueryFilter from "../dynamicList/QueryFilter";
 

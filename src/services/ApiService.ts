@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const tableApiUrl = process.env.REACT_APP_API_URL; // using relative path via reverse proxy
+const tableApiUrl = import.meta.env.VITE_APP_API_URL; // using relative path via reverse proxy
 
 const ApiService = {
   /**

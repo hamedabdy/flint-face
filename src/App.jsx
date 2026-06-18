@@ -5,8 +5,8 @@ import { CircularProgress, Typography, Box } from "@mui/material";
 import Home from "./components/Home";
 const DynamicForm = lazy(() => import("./components/dynamicForm/DynamicForm"));
 const DynamicList = lazy(() => import("./components/dynamicList/DynamicList"));
-const PaperBase = lazy(() => import("./newHome/Paperbase.js"));
-const DynamicPageLoader = lazy(() => import("./components/dynamicPageLoad/DynamicPageLoaderRoute.jsx"));
+const PaperBase = lazy(() => import("./newHome/Paperbase"));
+const DynamicPageLoader = lazy(() => import("./components/dynamicPageLoad/DynamicPageLoaderRoute"));
 
 function SuspenseFallback() {
   return (
