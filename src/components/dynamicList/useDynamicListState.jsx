@@ -21,7 +21,7 @@ export function useDynamicListState(data = [], columns = [], initial = {}) {
 
   // pagination
   const [page, setPage] = useState(initial.page || 0);
-  const [rowsPerPage, setRowsPerPage] = useState(initial.rowsPerPage || 20);
+  const [rowsPerPage, setRowsPerPage] = useState(initial.rowsPerPage || 25);
 
   // selection (ids)
   const [selected, setSelected] = useState(initial.selected || []);
