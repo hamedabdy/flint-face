@@ -12,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 /**
- * TableMenu – a reusable menu component used in the DynamicList toolbar.
+ * HeaderMenu – a reusable menu component used in the DynamicList toolbar.
  *
  * When the icon button is clicked a menu appears with the following hierarchy:
  *   Configure ▶ Table – redirects to the table definition page
@@ -22,7 +22,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
  * The component receives the current `tableName` as a prop and builds the URLs
  * dynamically.
  */
-const TableMenu = ({ tableName }) => {
+const HeaderMenu = ({ tableName }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleOpen = (event) => {
@@ -122,14 +122,21 @@ const TableMenu = ({ tableName }) => {
         >
           Dictionary
         </MenuItem>
+        <MenuItem
+          onClick={() =>
+            navigate(`./sys_script.list?sysparm_query=collection=${tableName}`)
+          }
+        >
+          Business Rules
+        </MenuItem>
       </Menu>
     </>
   );
 };
 
-TableMenu.propTypes = {
+HeaderMenu.propTypes = {
   /** Name of the current table – used to build the redirect URLs */
   tableName: PropTypes.string.isRequired,
 };
 
-export default TableMenu;
+export default HeaderMenu;

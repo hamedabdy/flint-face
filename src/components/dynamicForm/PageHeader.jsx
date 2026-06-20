@@ -15,6 +15,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 // IMPORT LOCAL COMPONENTS
 import FormButtons from "./FormButtons";
+import HeaderMenu from "../shared/HeaderMenu";
+
 
 const StyledAppBar = styled(AppBar)({
   marginBottom: "1em",
@@ -47,24 +49,7 @@ const PageHeader = (props) => {
                 <ArrowLeftIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip aria-label="Menu">
-              <IconButton
-                component={ReactRouterLink}
-                to={"#"}
-                sx={{
-                  backgroundColor: "#E9E9E9", // light grey
-                  borderRadius: 0.5, // squared corners (4px)
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0", // slightly darker on hover
-                  },
-                  boxShadow: "none",
-                  minWidth: 32,
-                  minHeight: 32,
-                }}
-              >
-                <MenuIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
+            <HeaderMenu tableName={table.name} />
           </Box>
           <Box sx={{ flexGrow: 1, ml: 1 }}>
             <Typography

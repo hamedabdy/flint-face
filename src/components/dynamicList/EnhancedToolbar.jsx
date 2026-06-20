@@ -5,12 +5,13 @@ import { Link as ReactRouterLink } from "react-router-dom";
 // Styles
 import { alpha } from "@mui/material/styles";
 import ArrowLeftIcon from '@mui/icons-material/ArrowBackIosNew';
-// MenuIcon is now used inside TableMenu component; import it there instead.
+// MenuIcon is now used inside HeaderMenu component; import it there instead.
 import SettingsIcon from '@mui/icons-material/Settings';
-import TableMenu from "./TableMenu";
 
 import ToolbarActions from "./ToolbarActions";
 import ListSettings from "./ListSettings";
+import HeaderMenu from "../shared/HeaderMenu";
+
 
 import {
   AppBar,
@@ -127,7 +128,7 @@ const EnhancedToolbar = (props) => {
               </IconButton>
             </Tooltip>
             {/* Table menu with Configure and Import XML options */}
-            <TableMenu tableName={tableName} />
+            <HeaderMenu tableName={tableName} />
             <Typography
               sx={{
                 flex: "1 1 35%",
