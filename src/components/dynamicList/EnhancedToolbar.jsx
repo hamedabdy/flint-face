@@ -80,7 +80,7 @@ const EnhancedToolbar = (props) => {
     <AppBar
       elevation={1}
       color="default"
-      sx={{ position: "relative", zIndex: 100, padding: 1, backgroundColor: "#f5f5f5" }}
+      sx={{ position: "relative", zIndex: 100, padding: 0, backgroundColor: "#f5f5f5" }}
     >
       <Toolbar
         sx={{
@@ -117,10 +117,12 @@ const EnhancedToolbar = (props) => {
                     backgroundColor: "#e0e0e0", // slightly darker on hover
                   },
                   boxShadow: "none",
-                  padding: 1,
+                  mr: 1,
+                  minWidth: 32,
+                  minHeight: 32,
                 }}
               >
-                <ArrowLeftIcon fontSize="medium" />
+                <ArrowLeftIcon fontSize="small" />
               </IconButton>
             </Tooltip>
             <Tooltip aria-label="Menu">
@@ -128,17 +130,17 @@ const EnhancedToolbar = (props) => {
                 component={ReactRouterLink}
                 to={"#"}
                 sx={{
-                  marginLeft: 1,
                   backgroundColor: "#E9E9E9", // light grey
                   borderRadius: 0.5, // squared corners (4px)
                   "&:hover": {
                     backgroundColor: "#e0e0e0", // slightly darker on hover
                   },
                   boxShadow: "none",
-                  padding: 1,
+                  minWidth: 32,
+                  minHeight: 32,
                 }}
               >
-                <MenuIcon fontSize="medium" />
+                <MenuIcon fontSize="small" />
               </IconButton>
             </Tooltip>
             <Typography
@@ -171,19 +173,20 @@ const EnhancedToolbar = (props) => {
             sx={{
               backgroundColor: "#E9E9E9",
               borderRadius: 0.5,
-              ml: 1,
               "&:hover": { backgroundColor: "#e0e0e0" },
               boxShadow: "none",
-              padding: 1,
-              marginRight: 1,
+              mr: 1,
+              minWidth: 32,
+              minHeight: 32,
             }}
           >
-            <SettingsIcon fontSize="medium" />
+            <SettingsIcon fontSize="small" />
           </IconButton>
         </Tooltip>
-        {/* Actions moved to ToolbarActions */}
         <ToolbarActions tableName={tableName} numSelected={numSelected} />
-        <Button variant="contained" href={`./${tableName}.form?sys_id=-1`}>
+        <Button variant="contained" 
+        href={`./${tableName}.form?sys_id=-1`} 
+        sx={{ minWidth: 45, minHeight: 32, pl: 1, pr: 1, pt: 0.5, pb: 0.5, fontSize: "0.75rem" }}>
         New
       </Button>
         <ListSettings

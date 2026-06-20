@@ -1,0 +1,73 @@
+/**
+ * Content.css
+ * Styles for the Content component
+ */
+
+.content {
+  flex: 1;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-base),
+              color var(--transition-base);
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+}
+
+/* Responsive padding */
+@media (max-width: 768px) {
+  .content {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: var(--spacing-sm);
+  }
+}
+
+/* Scrollbar for content area */
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Override MUI Paper root margin-bottom */
+.css-2y4by5-MuiPaper-root {
+  margin-bottom: 0 !important;
+}
+
+.css-qfofbl {
+  height: 94vh;
+}
+
+/* Print styles */
+@media print {
+  .content {
+    padding: 0;
+    background: white;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    transition: none;
+  }
+}

@@ -156,6 +156,12 @@ const DynamicForm = () => {
       component="form"
       autoComplete="off"
       onSubmit={handleSubmit}
+      sx={{
+        height: '100%',
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
     >
       <PageHeader
         table={table}

@@ -22,7 +22,12 @@ const ToolbarActions = ({ tableName, numSelected }) => {
   return (
     <>
       {/* Dropdown for form actions */}
-      <FormControl sx={{ minWidth: 200, marginRight: 2 }} size="small">
+      <FormControl sx={{ minWidth: 200, minHeight: 32, marginRight: 1, 
+            "& .MuiSelect-select": {
+              py: "4px", // Reduce paddingc',
+              height: "1.5em",
+              minHeight: "auto",
+            }, }} size="small">
         <InputLabel id="form-actions-label">Actions</InputLabel>
         <Select
           labelId="form-actions-label"

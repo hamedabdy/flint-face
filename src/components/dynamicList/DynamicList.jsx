@@ -115,8 +115,9 @@ const fetchData = async () => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2, overflow: "hidden" }}>
+    <Box sx={{ width: "100%", height: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* Paper acts as a flex column so header, filter, table and pagination are stacked */}
+      <Paper sx={{ width: "100%", mb: 2, overflow: "hidden", display: "flex", flexDirection: "column", flex: 1 }}>
         <EnhancedToolbar
           columns={columns}
           numSelected={listState.selected.length}
@@ -127,12 +128,14 @@ const fetchData = async () => {
           visibleColumnElements={listState.visibleColumnElements}
         />
         <QueryFilter tableName={tableName} setData={setData} />
+        {/* Table container scrolls while header/footer stay fixed */}
         <TableContainer
           component={Paper}
           elevation={1}
-          sx={{ overflow: "auto" }}
+          sx={{ flex: 1, overflow: "auto" }}
         >
           <Table
+            stickyHeader
             size="small"
             sx={{
               minWidth: 750,
@@ -166,16 +169,19 @@ const fetchData = async () => {
             />
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 50, 100]}
-          component="div"
-          count={data.length}
-          rowsPerPage={listState.rowsPerPage}
-          page={listState.page}
-          onPageChange={listState.handleChangePage}
-          onRowsPerPageChange={listState.handleChangeRowsPerPage}
-          ActionsComponent={TablePaginationActions}
-        />
+        {/* Pagination stays at the bottom */}
+        <Box sx={{ flexShrink: 0 }}>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 50, 100]}
+            component="div"
+            count={data.length}
+            rowsPerPage={listState.rowsPerPage}
+            page={listState.page}
+            onPageChange={listState.handleChangePage}
+            onRowsPerPageChange={listState.handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
+          />
+        </Box>
       </Paper>
     </Box>
   );

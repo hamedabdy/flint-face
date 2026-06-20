@@ -25,7 +25,7 @@ const PageHeader = (props) => {
 
   return (
     <Paper elevation={1}>
-      <StyledAppBar position="static" color="default" elevation={1}>
+      <StyledAppBar position="static" color="default" elevation={1} sx={{ m: 0 }}>
         <Toolbar>
           <Box>
             <Tooltip aria-label="Go back">
@@ -33,16 +33,18 @@ const PageHeader = (props) => {
                 component={ReactRouterLink}
                 to={`../${table.name}.list`}
                 sx={{
+                  mr: 1,
                   backgroundColor: "#E9E9E9", // light grey
                   borderRadius: 0.5, // squared corners (4px)
                   "&:hover": {
                     backgroundColor: "#e0e0e0", // slightly darker on hover
                   },
                   boxShadow: "none",
-                  padding: 1,
+                  minWidth: 32,
+                  minHeight: 32,
                 }}
               >
-                <ArrowLeftIcon fontSize="medium" />
+                <ArrowLeftIcon fontSize="small" />
               </IconButton>
             </Tooltip>
             <Tooltip aria-label="Menu">
@@ -50,28 +52,28 @@ const PageHeader = (props) => {
                 component={ReactRouterLink}
                 to={"#"}
                 sx={{
-                  marginLeft: 1,
                   backgroundColor: "#E9E9E9", // light grey
                   borderRadius: 0.5, // squared corners (4px)
                   "&:hover": {
                     backgroundColor: "#e0e0e0", // slightly darker on hover
                   },
                   boxShadow: "none",
-                  padding: 1,
+                  minWidth: 32,
+                  minHeight: 32,
                 }}
               >
-                <MenuIcon fontSize="medium" />
+                <MenuIcon fontSize="small" />
               </IconButton>
             </Tooltip>
           </Box>
           <Box sx={{ flexGrow: 1, ml: 1 }}>
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", mb: 0, lineHeight: 1.1 }}
+              variant="h7"
+              sx={{ fontWeight: "bold", mb: 0, lineHeight: 1 }}
             >
               {table.label}
             </Typography>
-            <Typography variant="subtitle1" sx={{ fontWeight: "bold", mt: 0, lineHeight: 1.2 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: "bold", mt: 0, lineHeight: 1 }}>
               {(!sysID || sysID === "-1" || sysID === "")
                 ? "New record"
                 : (formData && formData.sys_name ? formData.sys_name : "")}
@@ -83,7 +85,7 @@ const PageHeader = (props) => {
           />
         </Toolbar>
       </StyledAppBar>
-      <Paper elevation={1} sx={{ borderRadius: 0, pl: 1 }}>
+      <Paper elevation={-1} sx={{ borderRadius: 0, p: 1 }}>
         Related records {/* TODO */}
       </Paper>
     </Paper>

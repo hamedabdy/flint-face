@@ -1,0 +1,501 @@
+/**
+ * TopNav.module.css
+ * Styles for the TopNav header component
+ * Uses CSS variables from tokens.css for colors, spacing, and typography
+ */
+
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-base), 
+              border-color var(--transition-base),
+              color var(--transition-base);
+  height: var(--header-height);
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.topnav--light {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-border);
+}
+
+.topnav--dark {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-border);
+}
+
+.topnav__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  padding: 0 var(--spacing-lg);
+  gap: var(--spacing-lg);
+  overflow: hidden;
+}
+
+/* Left Zone: Logo and Menu */
+.topnav__left {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex: 0 0 auto;
+}
+
+/* Hamburger Menu (Mobile) */
+/* Reduced hamburger size for more compact header */
+.topnav__hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+.topnav__hamburger:hover {
+  color: var(--color-primary);
+}
+
+.topnav__hamburger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.topnav__hamburger-icon {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: all var(--transition-fast);
+}
+
+/* Logo */
+/* Reduced logo container height */
+.topnav__logo {
+  display: flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.topnav__logo:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.topnav__logo-text {
+  font-family: var(--font-family-display);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+}
+
+/* Menu (Desktop) */
+.topnav__menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topnav__menu-list {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.topnav__menu-item {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* Reduced menu button height */
+.topnav__menu-button {
+  height: 36px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  position: relative;
+  transition: color var(--transition-fast);
+  border-radius: var(--radius-sm);
+}
+
+.topnav__menu-button:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-secondary);
+}
+
+.topnav__menu-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.topnav__menu-button--active {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.topnav__menu-button--active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: var(--spacing-md);
+  right: var(--spacing-md);
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  animation: slideIn 200ms ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    width: 0;
+    left: 50%;
+  }
+  to {
+    width: auto;
+    left: var(--spacing-md);
+  }
+}
+
+/* Center Zone: Page Title */
+.topnav__center {
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+}
+
+.topnav__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right Zone: Search, Chat, Theme, Avatar */
+.topnav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 0 0 auto;
+}
+
+/* Search Placeholder */
+/* Reduced size for search placeholder */
+.topnav__search-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--color-text-secondary);
+  cursor: default;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast);
+}
+
+.topnav__search-placeholder:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-secondary);
+}
+
+.topnav__search-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Icon Buttons (Chat, Theme) */
+/* Reduced size for icon buttons (chat, theme) */
+.topnav__icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), 
+              background-color var(--transition-fast);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.topnav__icon-button:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-secondary);
+}
+
+.topnav__icon-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.topnav__icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.topnav__chat-button {
+  position: relative;
+}
+
+.topnav__chat-button::after {
+  content: 'Coming soon';
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-text-inverse);
+  color: var(--color-text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-fast);
+  box-shadow: var(--shadow-md);
+  z-index: 1001;
+}
+
+.topnav__chat-button:hover::after,
+.topnav__chat-button:focus-visible::after {
+  opacity: 1;
+}
+
+.topnav__theme-button {
+  color: var(--color-primary);
+}
+
+/* Avatar Container */
+.topnav__avatar-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Avatar Button */
+/* Reduced avatar button size */
+.topnav__avatar-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.topnav__avatar-button:hover {
+  background-color: var(--color-surface-secondary);
+}
+
+.topnav__avatar-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Avatar Display */
+.topnav__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-text-inverse);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+}
+
+/* Submenu */
+.topnav__submenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: var(--spacing-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 160px;
+  z-index: 1001;
+  animation: slideDown 200ms ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Submenu Items */
+.topnav__submenu-item {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  background: none;
+  color: var(--color-text-primary);
+  text-align: left;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), 
+              color var(--transition-fast);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.topnav__submenu-item:hover {
+  background-color: var(--color-surface-secondary);
+  color: var(--color-primary);
+}
+
+.topnav__submenu-item:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .topnav__container {
+    padding: 0 var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .topnav__menu {
+    display: none;
+  }
+
+  .topnav__center {
+    flex: 1;
+  }
+
+  .topnav__title {
+    font-size: var(--font-size-base);
+  }
+
+  .topnav__right {
+    gap: var(--spacing-sm);
+  }
+
+  .topnav__search-placeholder {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .topnav__hamburger {
+    display: none;
+  }
+
+  .topnav__menu {
+    display: block;
+  }
+
+  .topnav__search-placeholder {
+    display: flex;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .topnav__menu-button {
+    border: 1px solid transparent;
+  }
+
+  .topnav__menu-button:focus-visible {
+    border: 1px solid var(--color-primary);
+  }
+
+  .topnav__icon-button:focus-visible {
+    border: 1px solid var(--color-primary);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .topnav,
+  .topnav__hamburger-icon,
+  .topnav__logo,
+  .topnav__menu-button,
+  .topnav__icon-button,
+  .topnav__submenu {
+    transition: none;
+  }
+
+  .topnav__menu-button--active::after {
+    animation: none;
+  }
+
+  .topnav__submenu {
+    animation: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .topnav {
+    position: static;
+    box-shadow: none;
+  }
+
+  .topnav__hamburger,
+  .topnav__icon-button,
+  .topnav__avatar-button {
+    display: none;
+  }
+}

@@ -1,0 +1,198 @@
+/**
+ * Layout.css
+ * Main layout styles for the newHome GUI
+ * Handles responsive grid, spacing, and overall structure
+ */
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-base), 
+              color var(--transition-base);
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-base), 
+              color var(--transition-base);
+  overflow: hidden;
+}
+
+.layout--light {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+.layout--dark {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+/* Main Container: Header + Content Layout */
+/* Main container now spans full viewport width */
+.layout__container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  width: 100vw;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+/* Main Content Area */
+.layout__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  min-height: 0;
+  background-color: var(--color-background);
+  transition: margin-left var(--transition-base);
+  box-sizing: border-box;
+  /* Ensure the main area occupies the full viewport height */
+  height: 100vh;
+}
+
+/* Accessibility: Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-decoration: none;
+  z-index: 10000;
+  border-radius: 0 0 var(--radius-md) 0;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* Responsive: Mobile */
+@media (max-width: 640px) {
+  .layout__container {
+    position: relative;
+  }
+
+  .layout__main {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+/* Responsive: Tablet and Desktop */
+@media (min-width: 641px) {
+  .layout__container {
+    gap: 0;
+  }
+
+  .layout__main {
+    flex: 1;
+  }
+}
+
+/* Responsive: Large Desktop */
+@media (min-width: 1280px) {
+  .layout__container {
+    gap: 0;
+  }
+}
+
+/* Utility: Smooth transitions for theme changes */
+.layout {
+  --transition-theme: background-color var(--transition-base), 
+                      color var(--transition-base),
+                      border-color var(--transition-base);
+}
+
+/* Utility: Focus management */
+.layout:focus-within {
+  outline: none;
+}
+
+/* Print styles */
+@media print {
+  .layout {
+    height: auto;
+  }
+
+  .layout__container {
+    flex-direction: column;
+  }
+
+  .layout__main {
+    width: 100%;
+  }
+
+  .skip-to-main {
+    display: none;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .layout,
+  .layout__main {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+  .layout {
+    border: 1px solid var(--color-border);
+  }
+}
+
+/* Browser scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-surface-secondary);
+}

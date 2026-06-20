@@ -61,8 +61,9 @@ const FormButtons = (props) => {
   //   };
 
   return (
-    <Stack direction="row" spacing={2}>
-      <Button type="submit" variant="contained" disableElevation size="small">
+    <Stack direction="row" spacing={2} sx={{ ml: 1}}>
+      <Button type="submit" variant="contained" disableElevation 
+      sx={{ minWidth: 40, minHeight: 32, pl: 1, pr: 1, pt: 0.5, pb: 0.5, fontSize: "0.75rem" }}>
         Save
       </Button>
       <Button
@@ -70,8 +71,8 @@ const FormButtons = (props) => {
         variant="contained"
         // color="secondary"
         disableElevation
-        size="small"
         onClick={insertAndStay}
+        sx={{ minWidth: 40, minHeight: 32, pl: 1, pr: 1, pt: 0.5, pb: 0.5, fontSize: "0.75rem" }}
       >
         Insert and stay
       </Button>
@@ -80,7 +81,7 @@ const FormButtons = (props) => {
         variant="contained"
         color="error"
         disableElevation
-        size="small"
+        sx={{ minWidth: 40, minHeight: 32, pl: 1, pr: 1, pt: 0.5, pb: 0.5, fontSize: "0.75rem" }}
         onClick={handleDelete}
       >
         Delete
