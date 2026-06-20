@@ -232,62 +232,6 @@ export default function SidePanel({
               onChange={handleSearchChange}
               aria-label="Search navigation items"
             />
-            {searchValue && (
-              <button
-                className="sidepanel__search-clear"
-                onClick={() => setSearchValue('')}
-                aria-label="Clear search"
-                type="button"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-
-          <div className="sidepanel__actions">
-            <button
-              className="sidepanel__action-button sidepanel__refresh-button"
-              onClick={handleRefresh}
-              aria-label="Refresh menu"
-              disabled={loading}
-              type="button"
-              title="Refresh menu"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                aria-hidden="true"
-              >
-                <path d="M2 4c0-1.1.9-2 2-2h8a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V4z"></path>
-                <path d="M6 2v3M10 2v3"></path>
-              </svg>
-            </button>
-
-            <button
-              className={`sidepanel__action-button sidepanel__pin-button ${
-                isPinned ? 'sidepanel__pin-button--active' : ''
-              }`}
-              onClick={onPinToggle}
-              aria-label={isPinned ? 'Unpin menu' : 'Pin menu'}
-              type="button"
-              title={isPinned ? 'Unpin menu' : 'Pin menu'}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill={isPinned ? 'currentColor' : 'none'}
-                stroke="currentColor"
-                strokeWidth="1.5"
-                aria-hidden="true"
-              >
-                <path d="M8 1L5 4H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-2L8 1z"></path>
-              </svg>
-            </button>
           </div>
         </div>
 
