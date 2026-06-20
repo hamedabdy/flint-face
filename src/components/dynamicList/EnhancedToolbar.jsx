@@ -5,8 +5,9 @@ import { Link as ReactRouterLink } from "react-router-dom";
 // Styles
 import { alpha } from "@mui/material/styles";
 import ArrowLeftIcon from '@mui/icons-material/ArrowBackIosNew';
-import MenuIcon from '@mui/icons-material/Menu';
+// MenuIcon is now used inside TableMenu component; import it there instead.
 import SettingsIcon from '@mui/icons-material/Settings';
+import TableMenu from "./TableMenu";
 
 import ToolbarActions from "./ToolbarActions";
 import ListSettings from "./ListSettings";
@@ -125,24 +126,8 @@ const EnhancedToolbar = (props) => {
                 <ArrowLeftIcon fontSize="small" />
               </IconButton>
             </Tooltip>
-            <Tooltip aria-label="Menu">
-              <IconButton
-                component={ReactRouterLink}
-                to={"#"}
-                sx={{
-                  backgroundColor: "#E9E9E9", // light grey
-                  borderRadius: 0.5, // squared corners (4px)
-                  "&:hover": {
-                    backgroundColor: "#e0e0e0", // slightly darker on hover
-                  },
-                  boxShadow: "none",
-                  minWidth: 32,
-                  minHeight: 32,
-                }}
-              >
-                <MenuIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
+            {/* Table menu with Configure and Import XML options */}
+            <TableMenu tableName={tableName} />
             <Typography
               sx={{
                 flex: "1 1 35%",
