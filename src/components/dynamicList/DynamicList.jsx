@@ -91,17 +91,12 @@ const DynamicList = () => {
         setColumns(allColumns);
         setTable(tableInfo?.data || {});
 
-        const currentUrlFields = searchParams.get("sysparm_fields");
-
         // Apply preference if URL doesn't explicitly override it
-        if (!currentUrlFields && pref?.columns?.length) {
+        if ( pref?.columns?.length) {
           const valid = pref.columns.filter(el => allColumns.some(c => c.element === el));
           if (valid.length) {
             listState.setVisibleColumnElements(valid);
             // Sync URL silently
-            const params = new URLSearchParams(searchParams);
-            params.set("sysparm_fields", valid.join(","));
-            navigate({ search: params.toString() }, { replace: true });
             return;
           }
         }
@@ -109,12 +104,6 @@ const DynamicList = () => {
         // No preference or URL override — show all columns
         const allElements = allColumns.map(col => col.element);
         listState.setVisibleColumnElements(allElements);
-        
-        if (!currentUrlFields) {
-          const params = new URLSearchParams(searchParams);
-          params.set("sysparm_fields", allElements.join(","));
-          navigate({ search: params.toString() }, { replace: true });
-        }
 
       } catch (error) {
         if (isMounted) console.error(`Error loading columns: ${error.message}`);
